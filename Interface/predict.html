@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <meta charset="utf-8">
+        <title>Predict Article</title>
+        <link rel="stylesheet" href="style/style.css">
+        <script src="script/script.js"></script>
+        
+    </head>
+    
+    <header>
+        <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="predict.html">Predict Article</a></li>
+            <li><a href="articles.html">List Articles</a></li>
+            <li><a href="bestDay.html">Best Day</a></li>
+        </ul>
+    </header>
+    
+    <body>
+        
+        <form>
+            <table>
+                <tr>    
+                    <td>Title</td> 
+                    <td><input type="text" name="title"></td>
+                    <td>File</td> 
+                    <td><input type="file" name="file"></td>
+                </tr>
+                <tr>    
+                    <td>Date of publishing</td> 
+                    <td><input type="date" name="publishing"></td>
+                    <td>Day of the week</td> 
+                    <td>
+                        <select name="day">
+                        <option value="monday">Monday</option>                    
+                        <option value="tuesday">Tuesday</option>                    
+                        <option value="wednesday">Wednesday</option>                    
+                        <option value="thursday">Thursday</option>                    
+                        <option value="friday">Friday</option>                    
+                        <option value="saturday">Satuday</option>                    
+                        <option value="sunday">Sunday</option>                    
+                        </select>
+                    </td>
+                </tr>
+                <tr>    
+                    <td>URL</td> 
+                    <td><input type="text" name="url"></td>
+                    <td>Data channel</td> 
+                    <td>
+                        <select name="channel">
+                        <option value="lifestyle">Lifestyle</option>                                        
+                        <option value="entertainment">Entertainment</option>                                        
+                        <option value="business">Business</option>                                        
+                        <option value="media">Social Media</option>                                        
+                        <option value="tech">Tech</option>                                        
+                        <option value="world">World</option>                                        
+                        </select>
+                    </td>
+                </tr>
+                <tr>    
+                    <td>Email</td> 
+                    <td><input type="email" name="email"></td>
+                </tr>
+            </table>
+            <input type="submit" name="predict" value="Predict">
+        </form>
+    
+    </body>
+    
+    <footer>
+    
+    </footer>
+
+</html>

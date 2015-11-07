@@ -11,19 +11,124 @@
     
     <header>
         <ul>
-            <li>Home</li>
-            <li>Predict Article</li>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="predict.html">Predict Article</a></li>
             <li>List Articles</li>
-            <li>Best Day</li>
+            <li><a href="bestDay.html">Best Day</a></li>
         </ul>
     </header>
     
     <body>
+        
+        <h2>Filter by :</h2>
+       
+        <form name="articles">
+            <table>
+                <tr>
+                    <td>Day of the week</td> 
+                    <td>
+                        <select name="day">
+                        <option value="monday">Monday</option>                    
+                        <option value="tuesday">Tuesday</option>                    
+                        <option value="wednesday">Wednesday</option>                    
+                        <option value="thursday">Thursday</option>                    
+                        <option value="friday">Friday</option>                    
+                        <option value="saturday">Satuday</option>                    
+                        <option value="sunday">Sunday</option>                    
+                        </select>
+                    </td>
+                </tr>
+                    <td>Data channel</td> 
+                    <td>
+                        <select name="channel">
+                        <option value="lifestyle">Lifestyle</option>                                        
+                        <option value="entertainment">Entertainment</option>                                        
+                        <option value="business">Business</option>                                        
+                        <option value="media">Social Media</option>                                        
+                        <option value="tech">Tech</option>                                        
+                        <option value="world">World</option>                                        
+                        </select>
+                    </td>
+                <tr>
+                    <td>Shares</td>
+                    <td>
+                        <select name="shares">
+                        <option value="popular">Popular</option>                                     
+                        <option value="unpopular">Unpopular</option>                                     
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Year</td>
+                    <td>
+                        <select name="year">
+                                                                                                  
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Month</td>
+                    <td>
+                        <select name="month">
+                        <option value="january">January</option>                                                                          
+                        <option value="february">February</option>                                                                          
+                        <option value="march">March</option>                                                                          
+                        <option value="april">April</option>                                                                          
+                        <option value="may">May</option>                                                                          
+                        <option value="june">June</option>                                                                          
+                        <option value="july">July</option>                                                                          
+                        <option value="august">August</option>                                                                          
+                        <option value="september">September</option>                                                                          
+                        <option value="october">October</option>                                                                          
+                        <option value="november">November</option>                                                                          
+                        <option value="december">December</option>                                                                          
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </form>
     
     </body>
+    
+    <script type="text/javascript">
+        var d = document.articles.year;
+        for(var i=2000; i <= 2015 ; i++)
+        {  
+            d.length++;
+            d.options[d.length-1].text = i;
+        }
+    </script>
     
     <footer>
     
     </footer>
 
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

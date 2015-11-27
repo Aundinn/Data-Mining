@@ -50,7 +50,7 @@
                         </select>
                     </td>
                 <tr>
-                    <td>Shares</td>
+                    <td>Popularity</td>
                     <td>
                         <select name="shares">
                         <option value="popular">Popular</option>                                     
@@ -91,12 +91,7 @@
     </body>
     
     <script type="text/javascript">
-        var d = document.articles.year;
-        for(var i=2000; i <= 2015 ; i++)
-        {  
-            d.length++;
-            d.options[d.length-1].text = i;
-        }
+        window.onload = year;
     </script>
     
     <footer>

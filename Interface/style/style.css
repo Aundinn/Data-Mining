@@ -1,3 +1,13 @@
 ul li{
     display: inline;
 }
+
+body{
+    background-color: beige;
+}
+
+header{
+    margin-top: 0px;
+    padding-top: 0px;
+    background-color: #600;
+}

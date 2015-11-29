@@ -1,5 +1,16 @@
 ul li{
     display: inline;
+    font-size: 2em;
+    border-left: 2em solid #600;
+}
+
+ul{
+    position: absolute;
+    margin-top: 2%;    
+}
+
+ul li:first-child {
+  border-left: none;
 }
 
 body{
@@ -24,6 +35,30 @@ form{
     margin: 2% auto auto 20%;
 }
 
-table{
-    
+#predict{
+    border: 1px solid black;
+    margin: 5% 20%;
+    padding: 10%;
+}
+
+#articles_list, #articles_list th, #articles_list td{
+    border: 1px solid black;
+    border-collapse: collapse;
+    width: 40%;
+    margin-left: 20%;
+    margin-top: 2%;
+}
+
+img{
+    float: right;
+    margin-right: 2%;
+    margin-top: 1%;
+}
+
+a:hover{
+    color: brown;
+}
+
+.active{
+    color: brown;
 }

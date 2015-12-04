@@ -16,6 +16,7 @@
             $("#update").click(function(event){
 
                 var n_tokens_title = $('#n_tokens_title').val()
+
                 var n_tokens_content = $('#n_tokens_content').val()
                 var num_hrefs = $('#num_hrefs').val()
                 var num_self_hrefs = $('#num_self_hrefs').val()
@@ -27,9 +28,15 @@
                 var self_reference_max_shares = $('#self_reference_max_shares').val()
                 var self_reference_avg_shares = $('#self_reference_avg_shares').val()
                 var weekday = $('#weekday').val()
-                
-               $('#predict').load('/predict?n_tokens_title='+n_tokens_title+'?n_tokens_content='+n_tokens_content+'?num_hrefs='+num_hrefs+'?num_self_hrefs='+num_self_hrefs+'?num_imgs='+num_imgs+'?num_videos ='+num_videos+'?average_token_length='+average_token_length+'?channel='+channel+'?self_reference_min_shares='+self_reference_max_shares+'?self_reference_avg_shares='+weekday);
-               alert(title);
+               
+
+                $.get('/predict?n_tokens_title='+n_tokens_title+'?n_tokens_content='+n_tokens_content+'?num_hrefs='+num_hrefs+'?num_self_hrefs='+num_self_hrefs+'?num_imgs='+num_imgs+'?num_videos ='+num_videos+'?average_token_length='+average_token_length+'?channel='+channel+'?self_reference_min_shares='+self_reference_max_shares+'?self_reference_avg_shares='+weekday, function(data, status){
+                    $('#predict').text(data)
+                    alert(status)
+                });
+               //var i = $('#predict').ajax('/predict?n_tokens_title='+n_tokens_title+'?n_tokens_content='+n_tokens_content+'?num_hrefs='+num_hrefs+'?num_self_hrefs='+num_self_hrefs+'?num_imgs='+num_imgs+'?num_videos ='+num_videos+'?average_token_length='+average_token_length+'?channel='+channel+'?self_reference_min_shares='+self_reference_max_shares+'?self_reference_avg_shares='+weekday);
+               
+                //alert("performed the load " + i);
             });
          });
         </script>
@@ -53,25 +60,25 @@
             <table>
                 <tr>    
                     <td>Number of words in the title: </td> 
-                    <td><input type="text" id="n_tokens_title"></td>
+                    <td><input type="text" id="n_tokens_title" value="0"></td>
                     <td>Number of words in the article: </td> 
-                    <td><input type="text" id="n_tokens_content"></td>
+                    <td><input type="text" id="n_tokens_content" value="0"></td>
                 </tr>
                 <tr>
                     <td>Number of links in the article: </td> 
-                    <td><input type="text" id="num_hrefs"></td>
+                    <td><input type="text" id="num_hrefs" value="0"></td>
                     <td>Number of links in the article to mashable.com: </td> 
-                    <td><input type="text" id="num_self_hrefs"></td>
+                    <td><input type="text" id="num_self_hrefs" value="0"></td>
                 </tr>            
                 <tr>
                     <td>Number of images in the article: </td> 
-                    <td><input type="text" id="num_imgs"></td>
+                    <td><input type="text" id="num_imgs" value="0"></td>
                     <td>Number of videos in the article to mashable.com: </td> 
-                    <td><input type="text" id="num_videos"></td>
+                    <td><input type="text" id="num_videos" value="0"></td>
                 </tr> 
                 <tr>
                     <td>average length of words in the article: </td> 
-                    <td><input type="text" id="average_token_length"></td>
+                    <td><input type="text" id="average_token_length" value="0"></td>
                     <td>Data Channel: </td> 
                     <td>
                         <select name="channel" id="channel">
@@ -88,13 +95,13 @@
                 </tr>     
                 <tr>
                     <td>minimal shares of referenced articles: </td> 
-                    <td><input type="text" id="self_reference_min_shares"></td>
+                    <td><input type="text" id="self_reference_min_shares" value="0"></td>
                     <td>maximum share of referenced articles: </td> 
-                    <td><input type="text" id="self_reference_max_shares"></td>
+                    <td><input type="text" id="self_reference_max_shares" value="0"></td>
                 </tr>  
                 <tr>    
                     <td>average share of referenced articles: </td> 
-                    <td><input type="text" id="self_reference_avg_shares"></td>
+                    <td><input type="text" id="self_reference_avg_shares" value="0"></td>
                     <td>Data channel</td> 
                     <td>
                         <select name="weekday" id="weekday">
@@ -110,10 +117,11 @@
                 </tr>
             </table>
     
-         <input type="submit" id="update" value="Predict">
+         <input type="submit" id="update" value="Start">
         
 
         <div id="predict">The prediction comes here</div>
+
     
     </body>
     

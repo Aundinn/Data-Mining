@@ -26,6 +26,7 @@ def handle_query(self, parameter):
 	return_value = "The Overview for the database"
 	
 	return_value = "<table border=1><tr><th>URL</th><th>Time Delta</th><th>n_tokens_title</th><th>n_tokens_content</th><th>num_hrefs</th><th>num_self_hrefs</th><th>num_images</th><th>num_videos</th><th>self_reference_average_shares</th><th>monday</th><th>tuesday</th><th>wednesday</th><th>thursday</th><th>friday</th><th>saturday</th><th>sunday</th><th>class</th></tr></table>"
+	print return_value
 	self.wfile.write(return_value)
 	return
 
@@ -36,8 +37,9 @@ def handle_request(self, parameter):
 		self.end_headers()
 
 		size = len(parameter)
-		arguments = ["day=", "title=","publishing=", "channel=", "email="]
-		argument_values = []
+		arguments = ["n_tokens_title=","n_tokens_content=","num_hrefs=","num_self_hrefs=","num_imgs=","num_videos=","average_token_length=","channel=","self_reference_min_shares=","self_reference_max_shares=","self_reference_avg_shares=","weekday="]
+		#arguments = ["day=", "title=","publishing=", "channel=", "email="]
+		argument_values = {}
 		for a in arguments:
 			value = ''
 			i = parameter.find(a)
@@ -45,13 +47,13 @@ def handle_request(self, parameter):
 			while(i < size and parameter[i] != '?'):
 				value += parameter[i]
 				i += 1
-			argument_values.append(value)
+			argument_values[a] = value
 
-		return_value = "The update worked on " + argument_values[0] + "."
+		return_value = "The values are: " + str(argument_values)
 		print return_value
-		return_value = "Day: " + argument_values[0] + "<br> Title: " + argument_values[1] + "<br> Publishing: " + argument_values[2] + "<br> Channel: " + argument_values[3] +	"<br> E-Mail: " + argument_values[4]
-
 		self.wfile.write(return_value)
+		print "send_value"
+		return
 
 
 class myHTTPServerRequestHandler(BaseHTTPRequestHandler):

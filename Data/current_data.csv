@@ -1,5 +1,6 @@
-Many,Normal,Normal,Few,Many,Many,Few,Entertainment,Few,Few,Few,Monday,Unpopular
-Many,Many,Many,Many,Many,Many,Normal,Tech,Few,Many,Normal,Monday,Unpopular
+n_tokens_title,n_tokens_content,num_hrefs,num_self_hrefs,num_imgs,num_videos,average_token_length,channel,self_reference_min_shares,self_reference_max_shares,self_reference_avg_shares,weekday,shares
+Many,Normal,Normal,Few,Few,Few,Few,Entertainment,Few,Few,Few,Monday,Unpopular
+Many,Many,Many,Many,Normal,Normal,Normal,Tech,Few,Many,Normal,Monday,Unpopular
 Normal,Normal,Few,Normal,Few,Many,Few,Tech,Many,Many,Many,Monday,Unpopular
 Few,Many,Many,Many,Many,Many,Normal,Lifestyle,Few,Many,Normal,Monday,Unpopular
 Many,Many,Many,Many,Many,Many,Normal,Tech,Few,Many,Normal,Monday,Unpopular

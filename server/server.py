@@ -48,11 +48,11 @@ def get_parameters(parameter):
 			else:
 				number = float(value)
 				if number < percentiles[a][0]:
-					argument_values[a] = "Few " + str(number) + " , " + str(percentiles[a][0])
+					argument_values[a] = "Few"
 				elif number > percentiles[a][1]:
-					argument_values[a] = "Many " + str(number) + " , " + str(percentiles[a][1])
+					argument_values[a] = "Many"
 				else:
-					argument_values[a] = "Normal " + str(number)
+					argument_values[a] = "Normal"
 		else:
 			print "could not find name: " + a 
 	return argument_values
@@ -105,14 +105,18 @@ def handle_query(self, argument_values):
 		value = "<tr>"
 		for name in names2:
 			value += "<th>" + str(database[name][i]) + "</th>"
-			if database[name][i] != argument_values[name]:
-				in_range = False
+	
+			if name == "channel" or name=="weekday":
+			#if True:
+				if database[name][i] != argument_values[name]:
+					print name + " " + str(database[name][i]) + ": " + str(argument_values[name])
+					in_range = False
 		if in_range:
 			value += "</tr>"
 			return_value += value
 			print "inRange"
-		else:
-			print "not in Range"
+		#else:
+		#	print "not in Range"
 
 	return_value += "</table>"
 
@@ -197,7 +201,7 @@ def run():
 	print "Starting the Script"
 	print "Load Data"
 	database = create_dict("../Data/current_data.csv")
-	#print database["n_tokens_title"]
+	print database["self_reference_avg_shares"]
 	percentiles = build_percentile()
 	server_address = ("127.0.0.1", 2000)
 	httpd = HTTPServer(server_address, myHTTPServerRequestHandler)

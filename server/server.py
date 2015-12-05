@@ -1,53 +1,130 @@
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 import os
 
-database = []
+database = {}
+percentiles = {}
 
-def readFile(filename):
-	f = open(filename, 'r')
-	database = []
-	for line in f:
-		itemset = []
-		tmp = ""
-		for s in line:
-			if not(s == ' '):
-				tmp += s
+names = ["n_tokens_title", "n_tokens_content", "num_hrefs", "num_self_hrefs", "num_imgs", "num_videos", "average_token_length",
+         "channel", "self_reference_min_shares", "self_reference_max_shares",
+         "self_reference_avg_shares", "weekday", "shares"]
+
+names2 = ["n_tokens_title", "n_tokens_content", "num_hrefs", "num_self_hrefs", "num_imgs", "num_videos", "average_token_length",
+         "channel", "self_reference_min_shares", "self_reference_max_shares",
+         "self_reference_avg_shares", "weekday"]
+
+def build_percentile():
+	percentiles = {}
+
+	percentiles["n_tokens_title"] = [9.0,12.0]
+	percentiles["n_tokens_content"] = [246.0,716.0]
+	percentiles["num_hrefs"] = [4.0,14.0]
+	percentiles["num_self_hrefs"] = [1.0,4.0]
+	percentiles["num_imgs"] = [1.0,4.0]
+	percentiles["num_videos"] = [0.0,4.0]
+	percentiles["average_token_length"] = [4.4784,4.85483870968]
+	percentiles["self_reference_min_shares"] = [639.0,2600.0]
+	percentiles["self_reference_max_shares"] = [1100.0,8000.0]
+	percentiles["self_reference_avg_shares"] = [981.0,5200.0]
+
+	return percentiles
+
+def get_parameters(parameter):
+	global names2
+	global percentiles
+	argument_values = {}
+	size = len(parameter)
+	for a in names2:
+		print a
+		value = ''
+		i = parameter.find(a)
+		if i != -1:
+			i += len(a) +1
+			while(i < size and parameter[i] != '?'):
+				value += parameter[i]
+				i += 1
+			print value
+			if a == "weekday" or a == "channel":
+				argument_values[a] = value
 			else:
-				itemset.append(tmp)
-				tmp = ""
-		database.append(itemset)
-	return database
+				number = float(value)
+				if number < percentiles[a][0]:
+					argument_values[a] = "Few " + str(number) + " , " + str(percentiles[a][0])
+				elif number > percentiles[a][1]:
+					argument_values[a] = "Many " + str(number) + " , " + str(percentiles[a][1])
+				else:
+					argument_values[a] = "Normal " + str(number)
+		else:
+			print "could not find name: " + a 
+	return argument_values
 
-def handle_query(self, parameter):
+
+
+def create_dict(name):
+    file = open(name, "r")
+    dataset = {}
+    for i in range(len(dataset)):
+        dataset[names[i]] = []
+
+    primeraLinea = True
+    for line in file:
+        i = 0
+        if primeraLinea == False:
+            line = line.split(",")
+            for obj in line:
+                if dataset.__contains__(names[i]):
+                    list = dataset.get(names[i])
+                    list.append(obj)
+                    dataset[names[i]] = list
+                    
+                else:
+                    list = []
+                    list.append(obj)    
+                    dataset[names[i]] = list
+                i += 1
+        primeraLinea = False
+    return dataset
+
+def handle_query(self, argument_values):
+	global database
+	global names2
 	self.send_response(200)
 	self.send_header('Content-type', 'text-html')
 	self.end_headers()
-
 	return_value = "The Overview for the database"
 	
-	return_value = "<table border=1><tr><th>URL</th><th>Time Delta</th><th>n_tokens_title</th><th>n_tokens_content</th><th>num_hrefs</th><th>num_self_hrefs</th><th>num_images</th><th>num_videos</th><th>self_reference_average_shares</th><th>monday</th><th>tuesday</th><th>wednesday</th><th>thursday</th><th>friday</th><th>saturday</th><th>sunday</th><th>class</th></tr></table>"
-	print return_value
+	return_value = "<table><tr>"
+	for name in names:
+		return_value += "<th>" + name+ "</th>"
+
+	print "Expect the database"
+	return_value += "</tr>"
+
+	n = len(database[names2[0]])
+	for i in xrange(n):
+		in_range = True
+		value = "<tr>"
+		for name in names2:
+			value += "<th>" + str(database[name][i]) + "</th>"
+			if database[name][i] != argument_values[name]:
+				in_range = False
+		if in_range:
+			value += "</tr>"
+			return_value += value
+			print "inRange"
+		else:
+			print "not in Range"
+
+	return_value += "</table>"
+
 	self.wfile.write(return_value)
 	return
 
 
-def handle_request(self, parameter):
+def handle_request(self, argument_values):
 		self.send_response(200)
 		self.send_header('Content-type', 'text-html')
 		self.end_headers()
 
-		size = len(parameter)
-		arguments = ["n_tokens_title=","n_tokens_content=","num_hrefs=","num_self_hrefs=","num_imgs=","num_videos=","average_token_length=","channel=","self_reference_min_shares=","self_reference_max_shares=","self_reference_avg_shares=","weekday="]
-		#arguments = ["day=", "title=","publishing=", "channel=", "email="]
-		argument_values = {}
-		for a in arguments:
-			value = ''
-			i = parameter.find(a)
-			i += len(a)
-			while(i < size and parameter[i] != '?'):
-				value += parameter[i]
-				i += 1
-			argument_values[a] = value
 
 		return_value = "The values are: " + str(argument_values)
 		print return_value
@@ -100,10 +177,11 @@ class myHTTPServerRequestHandler(BaseHTTPRequestHandler):
 
 				print request
 				print parameter
+				arguments = get_parameters(parameter)
 				if request == '/predict':
-					handle_request(self, parameter)
+					handle_request(self, arguments)
 				elif request == '/query':
-					handle_query(self, parameter)
+					handle_query(self, arguments)
 
 				return
 
@@ -114,9 +192,13 @@ class myHTTPServerRequestHandler(BaseHTTPRequestHandler):
 
 	
 def run():
+	global database	
+	global percentiles
 	print "Starting the Script"
 	print "Load Data"
-	database = readFile("../Data/prepro_data.csv")
+	database = create_dict("../Data/current_data.csv")
+	#print database["n_tokens_title"]
+	percentiles = build_percentile()
 	server_address = ("127.0.0.1", 2000)
 	httpd = HTTPServer(server_address, myHTTPServerRequestHandler)
 	print "Started the Server"

@@ -9,18 +9,31 @@
         <script type = "text/javascript" 
          src = "http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
-        <script type = "text/javascript" language = "javascript">
+         <script type = "text/javascript" language = "javascript">
          $(document).ready(function() {
             $("#update").click(function(event){
-                var day = $('#day').val()
+
+                var n_tokens_title = $('#n_tokens_title').val()
+                var n_tokens_content = $('#n_tokens_content').val()
+                var num_hrefs = $('#num_hrefs').val()
+                var num_self_hrefs = $('#num_self_hrefs').val()
+                var num_imgs = $('#num_imgs').val()
+                var num_videos = $('#num_videos').val()
+                var average_token_length = $('#average_token_length').val()
                 var channel = $('#channel').val()
-                var shares = $('#shares').val()
-                var year = $('#year').val()
-                var month = $('#month').val()
-                
-               $('#table').load('/query?day='+day+'?channel='+channel+'?shares='+shares+'?year='+year+'?month='+month);
+                var self_reference_min_shares = $('#self_reference_min_shares').val()
+                var self_reference_max_shares = $('#self_reference_max_shares').val()
+                var self_reference_avg_shares = $('#self_reference_avg_shares').val()
+                var weekday = $('#weekday').val()
                
-               alert(month);
+
+                $.get('/query?n_tokens_title='+n_tokens_title+'?n_tokens_content='+n_tokens_content+'?num_hrefs='+num_hrefs+'?num_self_hrefs='+num_self_hrefs+'?num_imgs='+num_imgs+'?num_videos='+num_videos+'?average_token_length='+average_token_length+'?channel='+channel+'?self_reference_min_shares='+self_reference_min_shares+'?self_reference_max_shares='+self_reference_max_shares+'?self_reference_avg_shares='+self_reference_avg_shares+'?weekday='+weekday, function(data, status){
+                    $('#predict').html(data)
+                    alert(status)
+                });
+               //var i = $('#predict').ajax('/predict?n_tokens_title='+n_tokens_title+'?n_tokens_content='+n_tokens_content+'?num_hrefs='+num_hrefs+'?num_self_hrefs='+num_self_hrefs+'?num_imgs='+num_imgs+'?num_videos ='+num_videos+'?average_token_length='+average_token_length+'?channel='+channel+'?self_reference_min_shares='+self_reference_max_shares+'?self_reference_avg_shares='+weekday);
+               
+                //alert("performed the load " + i);
             });
          });
         </script>
@@ -40,84 +53,71 @@
     
     <body>
        
-        <form name="articles">
             <h2>Filter by :</h2>
             <table>
-                <tr>
-                    <td>Day of the week</td> 
-                    <td>
-                        <select name="day" id='day'>
-                        <option value="monday">Monday</option>                    
-                        <option value="tuesday">Tuesday</option>                    
-                        <option value="wednesday">Wednesday</option>                    
-                        <option value="thursday">Thursday</option>                    
-                        <option value="friday">Friday</option>                    
-                        <option value="saturday">Satuday</option>                    
-                        <option value="sunday">Sunday</option>                    
-                        </select>
-                    </td>
+                <tr>    
+                    <td>Number of words in the title: </td> 
+                    <td><input type="text" id="n_tokens_title" value="0"></td>
+                    <td>Number of words in the article: </td> 
+                    <td><input type="text" id="n_tokens_content" value="0"></td>
                 </tr>
-                    <td>Data channel</td> 
+                <tr>
+                    <td>Number of links in the article: </td> 
+                    <td><input type="text" id="num_hrefs" value="0"></td>
+                    <td>Number of links in the article to mashable.com: </td> 
+                    <td><input type="text" id="num_self_hrefs" value="0"></td>
+                </tr>            
+                <tr>
+                    <td>Number of images in the article: </td> 
+                    <td><input type="text" id="num_imgs" value="0"></td>
+                    <td>Number of videos in the article to mashable.com: </td> 
+                    <td><input type="text" id="num_videos" value="0"></td>
+                </tr> 
+                <tr>
+                    <td>Average length of words in the article: </td> 
+                    <td><input type="text" id="average_token_length" value="0"></td>
+                    <td>Data Channel: </td> 
                     <td>
                         <select name="channel" id="channel">
-                        <option value="lifestyle">Lifestyle</option>                                        
-                        <option value="entertainment">Entertainment</option>                                        
-                        <option value="business">Business</option>                                        
-                        <option value="media">Social Media</option>                                        
-                        <option value="tech">Tech</option>                                        
+                        <option value="lifestyle">Lifestyle</option>                    
+                        <option value="entertainment">Entertainment</option>                    
+                        <option value="bus">Bus</option> 
+
+                        <option value="socmed">Social Media</option>                    
+                        <option value="tech">Technology</option>                    
+                        
                         <option value="world">World</option>                                        
                         </select>
                     </td>
+                </tr>     
                 <tr>
-                    <td>Popularity</td>
+                    <td>minimal shares of referenced articles: </td> 
+                    <td><input type="text" id="self_reference_min_shares" value="0"></td>
+                    <td>maximum share of referenced articles: </td> 
+                    <td><input type="text" id="self_reference_max_shares" value="0"></td>
+                </tr>  
+                <tr>    
+                    <td>average share of referenced articles: </td> 
+                    <td><input type="text" id="self_reference_avg_shares" value="0"></td>
+                    <td>Data channel</td> 
                     <td>
-                        <select name="shares" id="shares">
-                        <option value="popular">Popular</option>                                     
-                        <option value="unpopular">Unpopular</option>                                     
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Year</td>
-                    <td>
-                        <select name="year" id="year">
-                                                                                                  
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Month</td>
-                    <td>
-                        <select name="month" id="month">
-                        <option value="january">January</option>                                                                          
-                        <option value="february">February</option>                                                                          
-                        <option value="march">March</option>                                                                          
-                        <option value="april">April</option>                                                                          
-                        <option value="may">May</option>                                                                          
-                        <option value="june">June</option>                                                                          
-                        <option value="july">July</option>                                                                          
-                        <option value="august">August</option>                                                                          
-                        <option value="september">September</option>                                                                          
-                        <option value="october">October</option>                                                                          
-                        <option value="november">November</option>                                                                          
-                        <option value="december">December</option>                                                                          
+                        <select name="weekday" id="weekday">
+                        <option value="Monday">Monday</option>                    
+                        <option value="Tuesday">Tuesday</option>                    
+                        <option value="Wednesday">Wednesday</option>                    
+                        <option value="Thursday">Thursday</option>                    
+                        <option value="Friday">Friday</option>                    
+                        <option value="Saturday">Satuday</option>                    
+                        <option value="Sunday">Sunday</option>                    
                         </select>
                     </td>
                 </tr>
             </table>
-        </form>
-         
-        <input type="submit" id="update" value="Update">
+    
+         <input type="submit" id="update" value="Start">
+        
 
-        <div id ="table">
-            <table id="articles_list">
-                <tr>
-                    <th>ID</th>
-                    <th>Title</th>
-                    <th>Shares</th>
-                </tr>
-            </table>
-        </div>
+        <div id="predict">The prediction comes here</div>
     
     </body>
     

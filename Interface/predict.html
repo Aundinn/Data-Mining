@@ -80,6 +80,7 @@ a:hover{
          <script type="text/javascript">
          $(document).ready(function(){
             $("#update").click(function(event) {
+                //get the values from the form
                 var n_tokens_title = $('#n_tokens_title').val()
 
                 var n_tokens_content = $('#n_tokens_content').val()
@@ -96,6 +97,7 @@ a:hover{
                
                   alert("Start Classification");
 
+                //send the request to the server
                 $.get('/predict?n_tokens_title='+n_tokens_title+'?n_tokens_content='+n_tokens_content+'?num_hrefs='+num_hrefs+'?num_self_hrefs='+num_self_hrefs+'?num_imgs='+num_imgs+'?num_videos='+num_videos+'?average_token_length='+average_token_length+'?channel='+channel+'?self_reference_max_shares='+self_reference_max_shares+'?self_reference_min_shares='+self_reference_min_shares+'?self_reference_avg_shares='+self_reference_avg_shares+'?weekday='+weekday, function(data, status){
                     $('#predict').html(data)
                     alert("Finished Classification with " + status)

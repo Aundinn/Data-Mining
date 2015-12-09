@@ -1,0 +1,4 @@
+The following command must be used in a terminal for the preprocessing (valid for all steps):
+	python Preprocessing_Step1.py Dataset.txt
+
+The file with the dataset must be put as an argument, the extension doesn't matter as long as the attributes inside the file are separated by commas.

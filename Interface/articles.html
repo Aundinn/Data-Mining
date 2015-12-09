@@ -68,6 +68,8 @@ a:hover{
          $(document).ready(function() {
             $("#update").click(function(event){
 
+                //get the values from the form
+
                 //var n_tokens_title = $('#n_tokens_title').val()
                 var n_tokens_content = $('#n_tokens_content').val()
                 //var num_hrefs = $('#num_hrefs').val()
@@ -87,6 +89,7 @@ a:hover{
                     alert("Updated the dispalyed data with: " + status)
                 });
 */
+                //send the request
                 $.get('/query?n_tokens_content='+n_tokens_content+'?num_imgs='+num_imgs+'?channel='+channel+'?weekday='+weekday, function(data, status){
                     $('#predict').html(data)
                     alert("Updated the displayed data with: " + status)

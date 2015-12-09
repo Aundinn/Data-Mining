@@ -20,9 +20,10 @@ names3 = ["n_tokens_content", "num_imgs" ,"channel", "weekday"]
 names4 = ["n_tokens_content", "num_imgs" ,"channel", "weekday", "shares"]
 
 
-#classification
+
 #Classification code
-#insert
+
+#load the file into a dictonary
 def create_dict(name):
     file = open(name, "r")
     dataset = {}
@@ -215,6 +216,7 @@ def loop(name, value, article, deep, vector, num):
             r = loop(names[bigger], a[j], article, deep, vector, num)
     return r
 
+#start the classification (init is the entry point for starting the prediction and getting the result back)
 def init(article):
     vec = main("shares", None)
     number = 0
@@ -226,7 +228,8 @@ def init(article):
 #end classification
 
 
-
+#returns the percentiles of the attributes in the used dataset
+#this function is needed to convert the input from the user to the discretized values
 def build_percentile():
 	percentiles = {}
 
@@ -243,6 +246,8 @@ def build_percentile():
 
 	return percentiles
 
+#analyzes the request string for the parameters and returns them as
+#dictonary where the parameter names are used as keys
 def get_parameters(parameter, parameter_names):
 	global percentiles
 	argument_values = {}
@@ -272,6 +277,7 @@ def get_parameters(parameter, parameter_names):
 	return argument_values
 
 
+#is called when the request string begins with 'query' (from list articles view)
 def handle_query(self, argument_values):
 	global database
 	global names3
@@ -312,7 +318,7 @@ def handle_query(self, argument_values):
 	self.wfile.write(bytes(return_value, "utf8"))
 	return
 
-
+#is called when the request string begins with 'predic' (from the Predict View)
 def handle_request(self, argument_values):
 		self.send_response(200)
 		self.send_header('Content-type', 'text-html')
@@ -400,7 +406,9 @@ class myHTTPServerRequestHandler(BaseHTTPRequestHandler):
 			print("Was not able to open " + self.path)
 			self.send_error('404', "File was not available or could not be found")
 
-	
+#initial startup for the server
+#load the database
+#and start the HTTP server	
 def run():
 	global database	
 	global percentiles
@@ -417,8 +425,3 @@ def run():
 
 if __name__ == '__main__':
 	run()
-
-
-
-#init(article2)
-
